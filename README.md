@@ -69,7 +69,10 @@ fly certs create pie.gd
 ```bash
 SECRET_KEY_BASE=$(docker run --rm -it tootsuite/mastodon:latest bin/rake secret)
 OTP_SECRET=$(docker run --rm -it tootsuite/mastodon:latest bin/rake secret)
-fly secrets set OTP_SECRET=$OTP_SECRET SECRET_KEY_BASE=$SECRET_KEY_BASE
+
+fly secrets set \
+  OTP_SECRET=$OTP_SECRET \
+  SECRET_KEY_BASE=$SECRET_KEY_BASE
 
 docker run \
   --rm \
@@ -78,12 +81,9 @@ docker run \
   -e SECRET_KEY_BASE=$SECRET_KEY_BASE \
   tootsuite/mastodon:latest \
   bin/rake mastodon:webpush:generate_vapid_key \
+| sed 's/\r//' \
 | fly secrets import
 ```
-
-> **Note**
->
-> Generating the VAPID keys this way didn't seem to work initially; push notification jobs failed with "invalid base64" errors. I later regenerated them by manually SSHing into the app and running `bin/rake mastodon:webpush:generate_vapid_key` there, then used that output to set Fly secrets, and that seems to have worked.
 
 ### Redis
 
