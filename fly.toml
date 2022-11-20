@@ -1,0 +1,51 @@
+app = "pie-gd-mastodon"
+kill_signal = "SIGINT"
+kill_timeout = 5
+
+[build]
+  dockerfile = "apps/mastodon/Dockerfile"
+
+# [deploy]
+#   release_command = "bundle exec rails db:migrate"
+
+[env]
+  RAILS_LOG_LEVEL = "warn"
+  RAILS_LOG_TO_STDOUT = "enabled"
+  WEB_CONCURRENCY = "2"
+
+[processes]
+  mastodon = "hivemind"
+  sidekiq = "bundle exec sidekiq"
+
+[[services]]
+  internal_port = 8080 # Caddy listens on 8080 and proxies to Rails on port 3000 and Node on port 4000
+  processes = ["mastodon"]
+  protocol = "tcp"
+  script_checks = []
+
+  [services.concurrency]
+    hard_limit = 200
+    soft_limit = 50
+    type = "requests"
+
+  [[services.http_checks]]
+    path = "/health"
+    grace_period = "1s"
+    interval = "15s"
+    restart_limit = 8
+    timeout = "2s"
+
+  [[services.ports]]
+    force_https = true
+    handlers = ["http"]
+    port = 80
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 443
+
+  [[services.tcp_checks]]
+    grace_period = "1s"
+    interval = "15s"
+    restart_limit = 0
+    timeout = "2s"

@@ -1,0 +1,5 @@
+app = "pie-gd-redis"
+
+[mounts]
+  source = "mastodon_redis"
+  destination = "/data"

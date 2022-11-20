@@ -1,0 +1,3 @@
+caddy: caddy run --adapter caddyfile --config /opt/mastodon/Caddyfile
+rails: bundle exec rails server -p 3000
+streaming: PORT=4000 node ./streaming
