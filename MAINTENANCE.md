@@ -18,7 +18,7 @@ scripts/pg-backup.sh
 
 You'll be prompted for the Postgres password.
 
-This script uses `pg_dump` to produce a timestamped, compressed Postgres DB dump in the local `backups/postgres` directory.
+This script uses `pg_dump` to produce a timestamped, compressed Postgres DB dump and upload it to Backblaze B2 for safekeeping.
 
 More information on `pg_dump`:
 
