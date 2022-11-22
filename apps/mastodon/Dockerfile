@@ -21,9 +21,7 @@ RUN \
 COPY --link apps/mastodon/Caddyfile apps/mastodon/Procfile /opt/mastodon/
 
 # Rails env vars
-ENV \
-  RAILS_ENV="production" \
-  RAILS_SERVE_STATIC_FILES=""
+ENV RAILS_ENV="production"
 
 # Mastodon env vars
 ENV \

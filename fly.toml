@@ -9,9 +9,11 @@ kill_timeout = 5
 #   release_command = "bundle exec rails db:migrate"
 
 [env]
+  MAX_THREADS = "10"
   RAILS_LOG_LEVEL = "warn"
-  RAILS_LOG_TO_STDOUT = "enabled"
-  WEB_CONCURRENCY = "2"
+  RAILS_LOG_TO_STDOUT = "true"
+  RAILS_SERVE_STATIC_FILES = ""
+  WEB_CONCURRENCY = "0"
 
 [processes]
   mastodon = "hivemind"
