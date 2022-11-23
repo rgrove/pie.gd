@@ -26,7 +26,7 @@ I use Fly.io to run a small private Mastodon instance using the [official Mastod
 
   - `sidekiq` (shared-cpu-1x, 1GB RAM): Sidekiq job processor.
 
-- `pie-gd-postgres` (shared-cpu-1x, 512MB RAM): Postgres database, created using [`fly pg create`](https://fly.io/docs/postgres/). This app has a 3GB persistent disk volume attached to it.
+- `pie-gd-postgres` (shared-cpu-1x, 512MB RAM x 2): Postgres database, created using [`fly pg create`](https://fly.io/docs/postgres/) and later scaled up. This is a cluster consisting of a primary and a replica, each with a 3GB persistent disk volume attached.
 
 - `pie-gd-redis` (shared-cpu-1x, 256MB RAM): Redis server. This app has a 1GB persistent disk volume attached to it.
 
