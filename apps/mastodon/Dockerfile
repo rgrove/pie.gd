@@ -33,7 +33,9 @@ ENV \
   S3_ENABLED="true" \
   S3_ENDPOINT="https://s3.us-west-001.backblazeb2.com" \
   S3_HOSTNAME="s3.us-west-001.backblazeb2.com" \
+  S3_OPEN_TIMEOUT="20" \
   S3_PROTOCOL="https" \
+  S3_READ_TIMEOUT="20" \
   SMTP_AUTHENTICATION="cram_md5" \
   SMTP_FROM_ADDRESS="Mastodon <notifications@pie.gd>" \
   SMTP_PORT="25" \
