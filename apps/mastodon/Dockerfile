@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM tootsuite/mastodon:v4.1.0
+FROM ghcr.io/mastodon/mastodon:v4.1.1
 ARG TARGETARCH
 USER root
 
