@@ -4,7 +4,7 @@ ARG TARGETARCH
 USER root
 
 # Install Caddy
-ARG CADDY_VERSION="2.6.3"
+ARG CADDY_VERSION="2.6.4"
 RUN \
   TMPFILE=$(mktemp) && \
   wget -O "$TMPFILE" "https://github.com/caddyserver/caddy/releases/download/v${CADDY_VERSION}/caddy_${CADDY_VERSION}_linux_${TARGETARCH}.deb" && \
