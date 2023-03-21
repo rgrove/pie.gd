@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# Uses wget to ping `$SIDEKICK_HEARTBEAT_URL` when sidekiqmon reports that a
+# sidekiq process is running on this host.
+#
+# This script is used both as a Fly.io healthcheck and as a Better Uptime
+# heartbeat. Set `$SIDEKICK_HEARTBEAT_URL` to a Better Uptime heartbeat URL.
+
+cd /opt/mastodon || exit 1
+
+if bundle exec sidekiqmon processes | grep -q "$(hostname)"; then
+  wget --quiet --method HEAD "$SIDEKIQ_HEARTBEAT_URL" || true
+else
+  echo "error: sidekiq is not running"
+  exit 1
+fi

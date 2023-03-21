@@ -19,15 +19,17 @@ RUN \
   chmod +x /usr/bin/hivemind
 
 COPY --link apps/mastodon/Caddyfile apps/mastodon/Procfile /opt/mastodon/
+COPY --link --chmod=755 apps/mastodon/bin/* /app/bin/
 
 # Rails env vars
 ENV RAILS_ENV="production"
 
-# Mastodon env vars
+# Mastodon/Sidekiq env vars
 ENV \
   LOCAL_DOMAIN="pie.gd" \
   REDIS_HOST="pie-gd-redis.internal" \
   REDIS_PORT="6379" \
+  REDIS_URL="redis://pie-gd-redis.internal:6379" \
   S3_ALIAS_HOST="files.pie.gd" \
   S3_BUCKET="pie-gd-uploads" \
   S3_ENABLED="true" \
