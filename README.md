@@ -94,6 +94,13 @@ fly volumes create mastodon_redis --config apps/redis/fly.toml --region sea --si
 fly deploy apps/redis
 ```
 
+To add a read-only replica in `sjc`:
+
+```bash
+fly machines list --config apps/redis/fly.toml
+fly machines clone <machine id from list> --config apps/redis/fly.toml --region sjc
+```
+
 ### Postgres
 
 ```bash

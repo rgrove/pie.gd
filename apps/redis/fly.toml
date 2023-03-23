@@ -1,5 +1,8 @@
 app = "pie-gd-redis"
 
+[env]
+  PRIMARY_REGION = "sea"
+
 [mounts]
   source = "mastodon_redis"
   destination = "/data"

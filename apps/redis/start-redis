@@ -1,0 +1,31 @@
+#!/bin/sh
+
+# Starts Redis.
+#
+# If this is the primary region, Redis will run as the primary instance.
+# Otherwise it'll run as a read-only replica.
+
+set -e
+
+sysctl vm.overcommit_memory=1 || true
+sysctl net.core.somaxconn=1024 || true
+
+: "${FLY_VM_MEMORY_MB:=256}"
+
+# Use 50% of available memory. Since we're using Redis's default
+# maxmemory-policy of `noeviction`, write commands will begin failing if we
+# reach this limit, but that's better than Redis crashing.
+MAXMEMORY=$((FLY_VM_MEMORY_MB * 50 / 100))
+
+if [ "$FLY_REGION" = "$PRIMARY_REGION" ]; then
+  redis-server \
+    --appendonly yes \
+    --dir /data/ \
+    --maxmemory "${MAXMEMORY}mb"
+else
+  redis-server \
+    --appendonly yes \
+    --dir /data/ \
+    --maxmemory "${MAXMEMORY}mb" \
+    --replicaof "$PRIMARY_REGION.$FLY_APP_NAME.internal" 6379
+fi
