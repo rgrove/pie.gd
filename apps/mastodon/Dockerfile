@@ -27,8 +27,6 @@ ENV RAILS_ENV="production"
 # Mastodon/Sidekiq env vars
 ENV \
   LOCAL_DOMAIN="pie.gd" \
-  REDIS_HOST="sea.pie-gd-redis.internal" \
-  REDIS_PORT="6379" \
   REDIS_URL="redis://sea.pie-gd-redis.internal:6379" \
   S3_ALIAS_HOST="files.pie.gd" \
   S3_BUCKET="pie-gd-uploads" \
