@@ -1,0 +1,2 @@
+redis: /app/bin/start-redis
+metrics: /usr/bin/redis_exporter -redis.addr localhost:6379 -web.listen-address ":9091"

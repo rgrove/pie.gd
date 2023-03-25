@@ -3,6 +3,10 @@ app = "pie-gd-redis"
 [env]
   PRIMARY_REGION = "sea"
 
+[metrics]
+  port = 9091
+  path = "/metrics"
+
 [mounts]
   source = "mastodon_redis"
   destination = "/data"
