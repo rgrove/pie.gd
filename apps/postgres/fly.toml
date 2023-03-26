@@ -1,6 +1,6 @@
-# fly.toml file generated for pie-gd-postgres on 2023-03-21T20:51:48-07:00
+# fly.toml file generated for pie-gd-postgres15 on 2023-03-25T17:02:47-07:00
 
-app = "pie-gd-postgres"
+app = "pie-gd-postgres15"
 kill_signal = "SIGINT"
 kill_timeout = 5
 primary_region = "sea"
@@ -32,6 +32,30 @@ primary_region = "sea"
   [checks.vm]
     port = 5500
     type = "http"
-    interval = "1m0s"
+    interval = "15s"
     timeout = "10s"
     path = "/flycheck/vm"
+
+[[services]]
+  protocol = "tcp"
+  internal_port = 5432
+
+  [[services.ports]]
+    port = 5432
+    handlers = ["pg_tls"]
+  [services.concurrency]
+    type = "connections"
+    hard_limit = 1000
+    soft_limit = 1000
+
+[[services]]
+  protocol = "tcp"
+  internal_port = 5433
+
+  [[services.ports]]
+    port = 5433
+    handlers = ["pg_tls"]
+  [services.concurrency]
+    type = "connections"
+    hard_limit = 1000
+    soft_limit = 1000

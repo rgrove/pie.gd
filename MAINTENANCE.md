@@ -29,7 +29,7 @@ More information on `pg_dump`:
 To communicate with Postgres, first open a local proxy:
 
 ```bash
-fly proxy 5432 --app pie-gd-postgres
+fly proxy 5432 --app pie-gd-postgres15
 ```
 
 Restore a Postgres backup:

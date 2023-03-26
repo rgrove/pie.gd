@@ -26,9 +26,9 @@ I use Fly.io to run a small private Mastodon instance using the [official Mastod
 
   - `sidekiq` (shared-cpu-1x, 1GB RAM): Sidekiq job processor.
 
-- `pie-gd-postgres` (shared-cpu-1x, 512MB RAM x 2): Postgres database, created using [`fly pg create`](https://fly.io/docs/postgres/) and later scaled up. This is a cluster consisting of a primary and a replica, each with a 3GB persistent disk volume attached.
+- `pie-gd-postgres15` (shared-cpu-1x, 512MB RAM x 3): Postgres, created using [`fly pg create`](https://fly.io/docs/postgres/) and later scaled up. This is a multi-region cluster consisting of two machines in the primary `sea` region and one in the `sjc` region, each with a 3GB persistent disk volume attached.
 
-- `pie-gd-redis` (shared-cpu-1x, 256MB RAM): Redis server. This app has a 1GB persistent disk volume attached to it.
+- `pie-gd-redis` (shared-cpu-1x, 256MB RAM x 2): Redis. This is a primary in the `sea` region and a read-only replica in the `sjc` region, each with a 1GB persistent disk volume.
 
 Media is stored in [Backblaze B2](https://www.backblaze.com/b2/cloud-storage.html), which has an S3-compatible API that Mastodon can use (and lower storage fees than S3).
 
@@ -103,9 +103,34 @@ fly machines clone <machine id from list> --config apps/redis/fly.toml --region 
 
 ### Postgres
 
+Create a Postgres flex cluster. We'll create two machines in the `sea` region, scale them up from the default 256MB of RAM to 512MB, and then add a machine in the `sjc` region to get cross-region replication.
+
 ```bash
-fly pg create --org pie-gd --name pie-gd-postgres --region sea
-fly pg attach --app pie-gd-mastodon pie-gd-postgres
+fly pg create --org pie-gd --name pie-gd-postgres15 --initial-cluster-size 2 --region sea --flex
+```
+
+List the machines to get their IDs:
+
+```bash
+fly machines list --app pie-gd-postgres15
+```
+
+Scale up the machines to increase their RAM (do this for both machines in the list):
+
+```bash
+fly machine update <machine id from list> --memory 512 --app pie-gd-postgres15
+```
+
+Add a replica in the `sjc` region:
+
+```bash
+fly machines clone <machine id from list> --region sjc --app pie-gd-postgres15
+```
+
+Attach the cluster to the `pie-gd-mastodon` app:
+
+```bash
+fly pg attach --app pie-gd-mastodon pie-gd-postgres15
 ```
 
 ### Upload Storage

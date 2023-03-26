@@ -13,7 +13,7 @@ set -e
 DB_NAME=pie_gd_mastodon
 B2_BUCKET=pie-gd-backups
 B2_FILENAME="$DB_NAME"-$(date +%Y%m%d_%H%M%S).sqlc
-FLY_APP=pie-gd-postgres
+FLY_APP=pie-gd-postgres15
 
 echo "=> Opening a local proxy to the database"
 fly proxy 5432 --app "$FLY_APP" &
