@@ -58,7 +58,7 @@ kill_timeout = 5
   [[services.script_checks]]
     command = "/app/bin/sidekiq-healthcheck"
     args = []
-    grace_period = "5s"
+    grace_period = "10s"
     interval = "30s"
-    restart_limit = 0
+    restart_limit = 4
     timeout = "15s"
