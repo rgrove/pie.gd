@@ -13,11 +13,16 @@ kill_timeout = 5
   RAILS_LOG_LEVEL = "warn"
   RAILS_LOG_TO_STDOUT = "true"
   RAILS_SERVE_STATIC_FILES = ""
+  STATSD_ADDR = "localhost:9125"
   WEB_CONCURRENCY = "0"
 
+[metrics]
+  port = 9091
+  path = "/metrics"
+
 [processes]
-  mastodon = "hivemind"
-  sidekiq = "bundle exec sidekiq"
+  mastodon = "hivemind Procfile.mastodon"
+  sidekiq = "hivemind Procfile.sidekiq"
 
 [[services]]
   internal_port = 8080 # Caddy listens on 8080 and proxies to Rails on port 3000 and Node on port 4000
@@ -32,7 +37,7 @@ kill_timeout = 5
 
   [[services.http_checks]]
     path = "/health"
-    grace_period = "5s"
+    grace_period = "10s"
     interval = "15s"
     restart_limit = 8
     timeout = "2s"
@@ -47,7 +52,7 @@ kill_timeout = 5
     port = 443
 
   [[services.tcp_checks]]
-    grace_period = "5s"
+    grace_period = "10s"
     interval = "15s"
     restart_limit = 0
     timeout = "2s"

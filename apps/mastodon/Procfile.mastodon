@@ -1,0 +1,4 @@
+rails: bundle exec rails server -p 3000
+streaming: PORT=4000 node ./streaming
+caddy: caddy run --adapter caddyfile --config /app/Caddyfile
+metrics: statsd_exporter --statsd.mapping-config=/app/statsd-mapping.yaml --web.listen-address ":9091"

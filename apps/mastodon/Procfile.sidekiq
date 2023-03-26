@@ -1,0 +1,2 @@
+sidekiq: bundle exec sidekiq
+metrics: statsd_exporter --statsd.mapping-config=/app/statsd-mapping.yaml --web.listen-address ":9091"
