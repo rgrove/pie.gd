@@ -1,6 +1,5 @@
-app = "pie-gd-mastodon"
-kill_signal = "SIGINT"
-kill_timeout = 5
+app = "pie-gd-mastodon-v2"
+primary_region = "sea"
 
 [build]
   dockerfile = "apps/mastodon/Dockerfile"

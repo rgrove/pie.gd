@@ -18,9 +18,9 @@ I'm grateful to everyone who has shared their work, and I've tried to give credi
 
 ## Overview
 
-I use Fly.io to run a small private Mastodon instance using the [official Mastodon Docker image](https://hub.docker.com/r/tootsuite/mastodon). Currently, this involves running 4 Fly.io virtual machines divided across 3 apps:
+I use Fly.io to run a small private Mastodon instance using the [official Mastodon Docker image](https://hub.docker.com/r/tootsuite/mastodon). Currently, this involves running 4 Fly.io machines divided across 3 apps:
 
-- `pie-gd-mastodon`: This app uses the same Mastodon Docker image to run different processes in two separate VMs:
+- `pie-gd-mastodon-v2`: This app uses the same Mastodon Docker image to run different processes in two separate machines:
 
   - `mastodon` (shared-cpu-1x, 1GB RAM): [Caddy](https://caddyserver.com/) reverse proxy, Mastodon Rails app, and Mastodon Node.js streaming server.
 
@@ -49,6 +49,10 @@ This was adapted from [tmm1/flyapp-mastodon](https://github.com/tmm1/flyapp-mast
 I only did this once, and these steps are included here mainly for reference. Fly.io may introduce changes over time, so these steps may or may not continue to work the way they did when I initially set up pie.gd.
 
 ### App
+
+> **Note**
+>
+> These commands are what I used to create the original Apps v1 (aka Nomad) app for pie.gd. Apps created on Fly.io now default to the machine-based Apps v2 architecture. Some of these commands (such as setting the region and allocating ips) may no longer be needed, and you may need to use `fly machine update` to scale memory up after deploying.
 
 ```bash
 fly apps create --org pie-gd --name pie-gd-mastodon
