@@ -3,8 +3,8 @@
 # Uses wget to ping `$SIDEKICK_HEARTBEAT_URL` when sidekiqmon reports that a
 # sidekiq process is running on this host.
 #
-# This script is used both as a Fly.io healthcheck and as a Better Uptime
-# heartbeat. Set `$SIDEKICK_HEARTBEAT_URL` to a Better Uptime heartbeat URL.
+# This script is used to send a Better Uptime heartbeat. Set
+# `$SIDEKICK_HEARTBEAT_URL` to a Better Uptime heartbeat URL.
 
 cd /opt/mastodon || exit 1
 

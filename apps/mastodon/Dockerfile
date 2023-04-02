@@ -18,6 +18,12 @@ RUN \
   dpkg -i "$TMPFILE" && \
   rm -f "$TMPFILE"
 
+# Install Supercronic
+ARG SUPERCRONIC_VERSION="0.2.2"
+RUN \
+  wget -O /usr/bin/supercronic "https://github.com/aptible/supercronic/releases/download/v${SUPERCRONIC_VERSION}/supercronic-linux-${TARGETARCH}" && \
+  chmod +x /usr/bin/supercronic
+
 # Install Hivemind
 ARG HIVEMIND_VERSION="1.1.0"
 RUN \
@@ -32,6 +38,7 @@ COPY --link \
 
 COPY --link \
   apps/mastodon/Caddyfile \
+  apps/mastodon/crontab \
   apps/mastodon/statsd-mapping.yaml \
   /app/
 
