@@ -19,7 +19,7 @@ RUN \
   rm -f "$TMPFILE"
 
 # Install Supercronic
-ARG SUPERCRONIC_VERSION="0.2.2"
+ARG SUPERCRONIC_VERSION="0.2.23"
 RUN \
   wget -O /usr/bin/supercronic "https://github.com/aptible/supercronic/releases/download/v${SUPERCRONIC_VERSION}/supercronic-linux-${TARGETARCH}" && \
   chmod +x /usr/bin/supercronic
