@@ -66,5 +66,4 @@ ENV \
   SMTP_PORT="25" \
   SMTP_SERVER="smtp.postmarkapp.com"
 
-USER mastodon
-ENTRYPOINT []
+ENTRYPOINT ["/app/bin/docker-entrypoint"]

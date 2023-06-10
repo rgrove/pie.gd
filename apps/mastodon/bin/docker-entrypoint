@@ -1,0 +1,16 @@
+#!/bin/bash -e
+
+if [[ $(id -u) == 0 ]]; then
+  # Allocate swap space.
+  fallocate -l 512M /swapfile
+  chmod 0600 /swapfile
+  mkswap /swapfile
+  echo 10 > /proc/sys/vm/swappiness
+  swapon /swapfile
+  echo 1 > /proc/sys/vm/overcommit_memory
+
+  # Re-run this script as the Mastodon user.
+  exec su mastodon "$0" "$@"
+fi
+
+exec "${@}"
