@@ -30,12 +30,45 @@
 	handle @static {
 		file_server
 
+		# The following cache-control headers are based on the ones in Mastodon's
+		# Nginx config:
+		#
+		# https://github.com/mastodon/mastodon/blob/main/dist/nginx.conf
+
+		header /sw.js {
+			cache-control "public, max-age=604800, must-revalidate"
+		}
+
+		header /assets/* {
+			cache-control "public, max-age=2419200, must-revalidate"
+		}
+
+		header /avatars/* {
+			cache-control "public, max-age=2419200, must-revalidate"
+		}
+
 		header /emoji/* {
-			cache-control "public, max-age=1800"
+			cache-control "public, max-age=2419200, must-revalidate"
+		}
+
+		header /headers/* {
+			cache-control "public, max-age=2419200, must-revalidate"
 		}
 
 		header /packs/* {
-			cache-control "public, max-age=31536000, immutable"
+			cache-control "public, max-age=2419200, must-revalidate"
+		}
+
+		header /shortcuts/* {
+			cache-control "public, max-age=2419200, must-revalidate"
+		}
+
+		header /sounds/* {
+			cache-control "public, max-age=2419200, must-revalidate"
+		}
+
+		header /system/* {
+			cache-control "public, max-age=2419200, must-revalidate"
 		}
 	}
 
