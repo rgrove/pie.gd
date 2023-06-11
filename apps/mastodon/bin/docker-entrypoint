@@ -9,8 +9,8 @@ if [[ $(id -u) == 0 ]]; then
   swapon /swapfile
   echo 1 > /proc/sys/vm/overcommit_memory
 
-  # Re-run this script as the Mastodon user.
-  exec su mastodon "$0" "$@"
+  # Drop privileges to the mastodon user and run the Docker command.
+  exec su mastodon -c "${*}"
 fi
 
 exec "${@}"

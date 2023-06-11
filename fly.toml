@@ -1,4 +1,5 @@
 app = "pie-gd-mastodon-v2"
+kill_timeout = 15
 primary_region = "sea"
 
 [build]
@@ -21,8 +22,8 @@ primary_region = "sea"
   path = "/metrics"
 
 [processes]
-  mastodon = "hivemind Procfile.mastodon"
-  sidekiq = "hivemind Procfile.sidekiq"
+  mastodon = "hivemind --timeout 10 Procfile.mastodon"
+  sidekiq = "hivemind --timeout 10 Procfile.sidekiq"
 
 [[services]]
   internal_port = 8080 # Caddy listens on 8080 and proxies to Rails on port 3000 and Node on port 4000
