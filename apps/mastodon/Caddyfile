@@ -10,11 +10,16 @@
 }
 
 (proxy_config) {
-	# Replace the x-forwarded-for header with the value of the fly-client-ip
-	# header. This is necessary because Fly allows x-forwarded-for to be spoofed
-	# (as of 2022-11-09).
-	header_up x-forwarded-for {http.request.header.fly-client-ip}
+	# Replace the x-forwarded-for and x-real-ip headers with the value of the
+	# fly-client-ip header (or another custom header if the `HEADER_CLIENT_IP` env
+	# var is set). This is necessary because Fly allows x-forwarded-for to be
+	# spoofed (as of 2022-11-09).
+	#
+	# If you run this server behind Cloudflare, you can set `HEADER_CLIENT_IP` to
+	# `cf-connecting-ip` to use the Cloudflare-provided client IP address.
+	header_up x-forwarded-for {http.request.header.{$HEADER_CLIENT_IP:fly-client-ip}}
 	header_up x-forwarded-proto https
+	header_up x-real-ip {http.request.header.{$HEADER_CLIENT_IP:fly-client-ip}}
 
 	transport http {
 		compression off
