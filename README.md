@@ -12,7 +12,7 @@ When I first set out to run a Mastodon instance on Fly.io a few weeks ago I did 
 
 In the weeks since I first began running this server I've seen a few other people post about their own Mastodon instances on Fly.io, and I was fascinated to see some of the similarities and differences in how we solved the same problems.
 
-André Arko's [fantastic pull request](https://github.com/tmm1/flyapp-mastodon/pull/2) against tmm1/flyapp-mastodon — which I discovered while writing this readme! — both validates some of the solutions I wasn't quite sure about (like using Caddy as an in-VM reverse proxy and Hivemind as a process manager) and offers new solutions to problems I haven't solved yet (like how to scale Sidekiq and the Rails app).
+André Arko's [fantastic pull request](https://github.com/tmm1/flyapp-mastodon/pull/2) against tmm1/flyapp-mastodon — which I discovered while writing this readme! — both validates some of the solutions I wasn't quite sure about (like using an in-VM reverse proxy and Hivemind as a process manager) and offers new solutions to problems I haven't solved yet (like how to scale Sidekiq and the Rails app).
 
 I'm grateful to everyone who has shared their work, and I've tried to give credit in this readme and in commit messages where appropriate (and will continue to do so). In that spirit, I hope you'll also feel free to use anything you learn from this repo.
 
@@ -22,7 +22,7 @@ I use Fly.io to run a small private Mastodon instance using the [official Mastod
 
 - `pie-gd-mastodon-v2`: This app uses the same Mastodon Docker image to run different processes in two separate machines:
 
-  - `mastodon` (shared-cpu-1x, 1GB RAM): [Caddy](https://caddyserver.com/) reverse proxy, Mastodon Rails app, and Mastodon Node.js streaming server.
+  - `mastodon` (shared-cpu-1x, 1GB RAM): Nginx reverse proxy, Mastodon Rails app, and Mastodon Node.js streaming server.
 
   - `sidekiq` (shared-cpu-1x, 1GB RAM): Sidekiq job processor.
 
@@ -34,13 +34,13 @@ Media is stored in [Backblaze B2](https://www.backblaze.com/b2/cloud-storage.htm
 
 I use [Cloudflare](https://www.cloudflare.com/) as a CDN in front of the Backblaze B2 bucket. Since Backblaze is part of Cloudflare's [Bandwidth Alliance](https://www.cloudflare.com/bandwidth-alliance/), egress charges from B2 are waived, which means serving media files costs me nothing.
 
-Why use Caddy in the `mastodon` VM when Fly.io already provides a reverse proxy? Two reasons:
+Why use Nginx in the `mastodon` VM when Fly.io already provides a reverse proxy? Two reasons:
 
 1. We need to be able to forward requests to both the Mastodon Rails app and the Node.js streaming server.
 
 2. Mastodon's rate limiting and abuse prevention features rely on being able to trust the [`x-forwarded-for`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For) header to determine the client's IP address, and Fly.io happily passes through any `x-forwarded-for` value the client sends, which makes it spoofable.
 
-Caddy is configured to replace the `x-forwarded-for` header with the value of the `fly-client-ip` header, which can't be spoofed by the client. And since it's already there, I also use Caddy to serve static assets with far-future `cache-control` headers.
+Nginx is configured to replace the `x-forwarded-for` header with the value of the `fly-client-ip` header, which can't be spoofed by the client. And since it's already there, I also use Nginx to serve static assets with far-future `cache-control` headers.
 
 ## Initial Setup
 

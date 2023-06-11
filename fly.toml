@@ -31,7 +31,7 @@ primary_region = "sea"
   sidekiq = "hivemind --timeout 10 Procfile.sidekiq"
 
 [[services]]
-  internal_port = 8080 # Caddy listens on 8080 and proxies to Rails on port 3000 and Node on port 4000
+  internal_port = 8080 # Nginx listens on 8080 and proxies to Rails on port 3000 and Node on port 4000
   processes = ["mastodon"]
   protocol = "tcp"
   auto_start_machines = true
