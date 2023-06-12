@@ -41,14 +41,14 @@ primary_region = "sea"
 
   [[services.http_checks]]
     path = "/health"
-    grace_period = "10s"
+    grace_period = "15s"
     interval = "15s"
     restart_limit = 8
     timeout = "2s"
 
   [[services.http_checks]]
     path = "/api/v1/streaming/health"
-    grace_period = "10s"
+    grace_period = "15s"
     interval = "15s"
     restart_limit = 8
     timeout = "2s"
