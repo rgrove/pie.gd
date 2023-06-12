@@ -53,12 +53,6 @@ primary_region = "sea"
     restart_limit = 8
     timeout = "2s"
 
-  [[services.http_checks]]
-    path = "/"
-    grace_period = "15s"
-    interval = "30s"
-    timeout = "10s"
-
   [[services.ports]]
     force_https = true
     handlers = ["http"]
