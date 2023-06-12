@@ -9,7 +9,7 @@ primary_region = "sea"
 #   release_command = "bundle exec rails db:migrate"
 
 [env]
-  HEADER_CLIENT_IP = "cf-connecting-ip" # Trust Cloudflare's cf-connecting-ip header
+  #HEADER_CLIENT_IP = "cf-connecting-ip" # Trust Cloudflare's cf-connecting-ip header
   MAX_THREADS = "16"
   MIN_THREADS = "5"
   RAILS_LOG_LEVEL = "warn"
