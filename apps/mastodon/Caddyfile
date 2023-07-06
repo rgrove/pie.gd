@@ -74,6 +74,8 @@
 
 		header /system/* {
 			cache-control "public, max-age=2419200, must-revalidate"
+			content-security-policy "default-src 'none'; form-action 'none'"
+			x-content-type-options "nosniff"
 		}
 	}
 
