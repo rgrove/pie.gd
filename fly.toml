@@ -5,8 +5,12 @@ primary_region = "sea"
 [build]
   dockerfile = "apps/mastodon/Dockerfile"
 
-# [deploy]
-#   release_command = "bundle exec rails db:migrate"
+[deploy]
+  strategy = "bluegreen"
+
+  # When it's necessary to run DB migrations before a deployment, uncomment the
+  # following line.
+  # release_command = "bundle exec rails db:migrate"
 
 [env]
   #HEADER_CLIENT_IP = "cf-connecting-ip" # Trust Cloudflare's cf-connecting-ip header
