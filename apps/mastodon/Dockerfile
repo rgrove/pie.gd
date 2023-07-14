@@ -38,7 +38,7 @@ RUN \
   chmod +x /usr/bin/statsd_exporter
 
 # Install Supercronic
-ARG SUPERCRONIC_VERSION="0.2.23"
+ARG SUPERCRONIC_VERSION="0.2.25"
 RUN \
   wget -O /usr/bin/supercronic "https://github.com/aptible/supercronic/releases/download/v${SUPERCRONIC_VERSION}/supercronic-linux-${TARGETARCH}" && \
   chmod +x /usr/bin/supercronic
