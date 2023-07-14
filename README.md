@@ -8,7 +8,7 @@ I've enjoyed learning more about Rails, Sidekiq, and Postgres, which I hadn't pr
 
 ## Acknowledgments
 
-When I first set out to run a Mastodon instance on Fly.io a few weeks ago I did some searching to see if there was prior art, and I found Aman Gupta Karmani's [tmm1/flyapp-mastodon](https://github.com/tmm1/flyapp-mastodon) repo, which was a tremendous help in getting started.
+When I first set out to run a Mastodon instance on Fly.io I did some searching to see if there was prior art and I found Aman Gupta Karmani's [tmm1/flyapp-mastodon](https://github.com/tmm1/flyapp-mastodon) repo, which was a tremendous help in getting started.
 
 In the weeks since I first began running this server I've seen a few other people post about their own Mastodon instances on Fly.io, and I was fascinated to see some of the similarities and differences in how we solved the same problems.
 
@@ -34,13 +34,19 @@ Media is stored in [Backblaze B2](https://www.backblaze.com/b2/cloud-storage.htm
 
 I use [Cloudflare](https://www.cloudflare.com/) as a CDN in front of the Backblaze B2 bucket. Since Backblaze is part of Cloudflare's [Bandwidth Alliance](https://www.cloudflare.com/bandwidth-alliance/), egress charges from B2 are waived, which means serving media files costs me nothing.
 
-Why use Nginx in the `mastodon` VM when Fly.io already provides a reverse proxy? Two reasons:
+Why use Nginx in the `mastodon` VM when Fly.io already provides a reverse proxy? Three reasons:
 
-1. We need to be able to forward requests to both the Mastodon Rails app and the Node.js streaming server.
+1.  We need to be able to forward requests to both the Mastodon Rails app and the Node.js streaming server.
 
-2. Mastodon's rate limiting and abuse prevention features rely on being able to trust the [`x-forwarded-for`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For) header to determine the client's IP address, and Fly.io happily passes through any `x-forwarded-for` value the client sends, which makes it spoofable.
+2.  Mastodon's rate limiting and abuse prevention features rely on being able to trust the [`x-forwarded-for`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For) header to determine the client's IP address, and Fly.io happily passes through any `x-forwarded-for` value the client sends, which makes it spoofable.
 
-Nginx is configured to replace the `x-forwarded-for` header with the value of the `fly-client-ip` header, which can't be spoofed by the client. And since it's already there, I also use Nginx to serve static assets with far-future `cache-control` headers.
+    Nginx is configured to replace the `x-forwarded-for` header with the value of the `fly-client-ip` header, which can't be spoofed by the client.
+
+3.  Many Mastodon responses are cacheable. When used as a caching proxy, Nginx easily handles the load spikes that can occur when lots of fediverse instances suddenly fetch post and user data after a post goes viral. These spikes would otherwise have to be handled by Rails and could easily overwhelm a small server (ask me how I know).
+
+Another option for caching would be to use a CDN, but the CDNs that are good for this kind of thing typically cost money and I'm doing this on the cheap.
+
+Cloudflare, while free, is a poor choice here because it not only requires custom configuration to get it to cache these responses, it also always ignores the `Vary` header, which means it will actually cache these responses incorrectly and very bad things will happen.
 
 ## Initial Setup
 
