@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM redis:7.0.10-alpine
+FROM redis:7.0.12-alpine
 ARG TARGETARCH
 
 RUN apk add --no-cache gzip tar wget
