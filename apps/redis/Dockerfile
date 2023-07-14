@@ -12,7 +12,7 @@ RUN \
   chmod +x /usr/bin/hivemind
 
 # Install Redis Exporter
-ARG REDIS_EXPORTER_VERSION="1.48.0"
+ARG REDIS_EXPORTER_VERSION="1.51.0"
 RUN \
   wget -O - "https://github.com/oliver006/redis_exporter/releases/download/v${REDIS_EXPORTER_VERSION}/redis_exporter-v${REDIS_EXPORTER_VERSION}.linux-${TARGETARCH}.tar.gz" \
     | tar -xz -C /usr/bin --strip-components=1 "redis_exporter-v${REDIS_EXPORTER_VERSION}.linux-${TARGETARCH}/redis_exporter" && \
