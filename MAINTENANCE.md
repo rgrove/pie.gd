@@ -8,7 +8,13 @@ The `pg_dump` and `pg_restore` tools are used to backup and restore the Postgres
 brew install libpq
 ```
 
-### Backing up
+### Backing up remotely
+
+See the [Postgres Tools](apps/postgres-tools/README.md) readme for instructions on how to run a one-off Fly machine that will perform a Postgres backup and upload it to Backblaze B2.
+
+### Backing up locally
+
+If you don't want to use a Fly machine to perform a remote backup, you can perform one locally.
 
 Create a Postgres backup:
 

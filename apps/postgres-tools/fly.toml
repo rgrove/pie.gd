@@ -1,0 +1,5 @@
+app = "pie-gd-postgres-tools"
+primary_region = "sea"
+
+[env]
+  PRIMARY_REGION = "sea"
