@@ -143,6 +143,17 @@ Attach the cluster to the `pie-gd-mastodon` app:
 fly pg attach --app pie-gd-mastodon pie-gd-postgres15
 ```
 
+### Elasticsearch
+
+Optional. If you choose not to deploy Elasticsearch, be sure to comment out or remove the `ES_ENABLED="true"` env var in [`apps/mastodon/Dockerfile`](apps/mastodon/Dockerfile).
+
+```bash
+fly apps create --org pie-gd --name pie-gd-elasticsearch
+fly regions add sea --config apps/elasticsearch/fly.toml
+fly volumes create mastodon_elasticsearch --config apps/elasticsearch/fly.toml --region sea --size 1
+fly deploy --vm-size shared-cpu-1x --vm-memory 2048 apps/elasticsearch
+```
+
 ### Upload Storage
 
 Uploads are stored in Backblaze B2 in the `pie-gd-uploads` bucket.

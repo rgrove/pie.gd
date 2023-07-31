@@ -1,0 +1,27 @@
+app = "pie-gd-elasticsearch"
+primary_region = "sea"
+
+[env]
+  PRIMARY_REGION = "sea"
+  ES_JAVA_OPTS = "-Xms1024m -Xmx1024m -Des.enforce.bootstrap.checks=true"
+  "cluster.name" = "es-mastodon"
+  "discovery.type" = "single-node"
+  "thread_pool.write.queue_size" = "1000"
+  "xpack.graph.enabled" = "false"
+  "xpack.license.self_generated.type" = "basic"
+  "xpack.ml.enabled" = "false"
+  "xpack.security.enabled" = "false"
+  "xpack.watcher.enabled" = "false"
+
+[mounts]
+  source = "mastodon_elasticsearch"
+  destination = "/usr/share/elasticsearch/data"
+
+[checks]
+  [checks.es]
+    type = "http"
+    port = 9200
+    path = "/_cluster/health"
+    grace_period = "30s"
+    interval = "15s"
+    timeout = "10s"

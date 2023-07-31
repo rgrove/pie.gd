@@ -1,0 +1,8 @@
+#!/bin/bash
+set -e
+
+sysctl -w vm.max_map_count=262144
+chown -R elasticsearch:elasticsearch /usr/share/elasticsearch/data
+
+# Drop privileges to the elasticsearch user and run the Docker command.
+exec su elasticsearch -c "/usr/local/bin/docker-entrypoint.sh ${*}"

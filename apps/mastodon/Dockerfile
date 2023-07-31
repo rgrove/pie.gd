@@ -71,8 +71,16 @@ COPY --link --chmod=755 \
 # Rails env vars
 ENV RAILS_ENV="production"
 
-# Mastodon/Sidekiq env vars
+# Mastodon/Sidekiq env vars.
+#
+# These env vars are defined here rather than in fly.toml because this way we
+# can spin up an on-demand machine using this Docker image and use it to run
+# Mastodon CLI utilities when necessary. The env vars in `fly.toml` are only
+# needed when running the actual Mastodon web app.
 ENV \
+  ES_ENABLED="true" \
+  ES_HOST="sea.pie-gd-elasticsearch.internal" \
+  ES_PORT="9200" \
   LOCAL_DOMAIN="pie.gd" \
   REDIS_URL="redis://sea.pie-gd-redis.internal:6379" \
   S3_ALIAS_HOST="files.pie.gd" \
