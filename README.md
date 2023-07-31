@@ -18,7 +18,7 @@ I'm grateful to everyone who has shared their work, and I've tried to give credi
 
 ## Overview
 
-I use Fly.io to run a small private Mastodon instance using the [official Mastodon Docker image](https://hub.docker.com/r/tootsuite/mastodon). Currently, this involves running 4 Fly.io machines divided across 3 apps:
+I use Fly.io to run a small private Mastodon instance using the [official Mastodon Docker image](https://hub.docker.com/r/tootsuite/mastodon). Currently, this involves running a number of Fly.io machines divided across four apps:
 
 - `pie-gd-mastodon-v2`: This app uses the same Mastodon Docker image to run different processes in two separate machines:
 
@@ -26,9 +26,11 @@ I use Fly.io to run a small private Mastodon instance using the [official Mastod
 
   - `sidekiq` (shared-cpu-1x, 1GB RAM): Sidekiq job processor.
 
-- `pie-gd-postgres15` (shared-cpu-1x, 512MB RAM x 3): Postgres, created using [`fly pg create`](https://fly.io/docs/postgres/) and later scaled up. This is a multi-region cluster consisting of two machines in the primary `sea` region and one in the `sjc` region, each with a 3GB persistent disk volume attached.
+- `pie-gd-postgres15` (shared-cpu-1x, 512MB RAM x 3): Postgres, created using [`fly pg create`](https://fly.io/docs/postgres/) and later scaled up. This is a multi-region cluster consisting of two machines in the primary `sea` region and one in the `sjc` region, each with a persistent disk volume attached.
 
-- `pie-gd-redis` (shared-cpu-1x, 256MB RAM x 2): Redis. This is a primary in the `sea` region and a read-only replica in the `sjc` region, each with a 1GB persistent disk volume.
+- `pie-gd-redis` (shared-cpu-1x, 256MB RAM x 2): Redis. This is a primary in the `sea` region and a read-only replica in the `sjc` region, each with a persistent disk volume.
+
+- `pie-gd-elasticsearch` (shared-cpu-1x, 2GB RAM): Single-node Elasticsearch service. Optional.
 
 Media is stored in [Backblaze B2](https://www.backblaze.com/b2/cloud-storage.html), which has an S3-compatible API that Mastodon can use (and lower storage fees than S3).
 
