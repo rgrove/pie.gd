@@ -151,8 +151,9 @@ Optional. If you choose not to deploy Elasticsearch, be sure to comment out or r
 
 ```bash
 fly apps create --org pie-gd --name pie-gd-elasticsearch
-fly regions add sea --config apps/elasticsearch/fly.toml
-fly volumes create mastodon_elasticsearch --config apps/elasticsearch/fly.toml --region sea --size 1
+fly regions add sea --app pie-gd-elasticsearch
+fly volumes create mastodon_elasticsearch --app pie-gd-elasticsearch --region sea --size 1
+fly ips allocate-v6 --private --app pie-gd-elasticsearch
 fly deploy --vm-size shared-cpu-1x --vm-memory 2048 apps/elasticsearch
 ```
 
