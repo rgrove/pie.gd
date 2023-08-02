@@ -79,8 +79,8 @@ ENV RAILS_ENV="production"
 # needed when running the actual Mastodon web app.
 ENV \
   ES_ENABLED="true" \
-  ES_HOST="pie-gd-elasticsearch.flycast" \
-  ES_PORT="80" \
+  ES_HOST="sea.pie-gd-elasticsearch.internal" \
+  ES_PORT="9200" \
   LOCAL_DOMAIN="pie.gd" \
   REDIS_URL="redis://sea.pie-gd-redis.internal:6379" \
   S3_ALIAS_HOST="files.pie.gd" \
