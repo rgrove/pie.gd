@@ -23,7 +23,7 @@ ENV \
   B2_BUCKET="pie-gd-backups" \
   PGDATABASE="pie_gd_mastodon" \
   PGHOST="pie-gd-postgres15.internal" \
-  PGPORT="5433" \
+  PGPORT="5432" \
   PGUSER="postgres"
 
 ENTRYPOINT []
