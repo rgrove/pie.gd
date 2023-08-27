@@ -4,5 +4,14 @@ set -e
 sysctl -w vm.max_map_count=262144
 chown -R elasticsearch:elasticsearch /usr/share/elasticsearch/data
 
+# Allocate swap space so Elasticsearch can run in a VM with limited RAM without
+# crashing.
+fallocate -l 512M /swapfile
+chmod 0600 /swapfile
+mkswap /swapfile
+echo 10 > /proc/sys/vm/swappiness
+swapon /swapfile
+echo 1 > /proc/sys/vm/overcommit_memory
+
 # Drop privileges to the elasticsearch user and run the Docker command.
 exec su elasticsearch -c "/usr/local/bin/docker-entrypoint.sh ${*}"
