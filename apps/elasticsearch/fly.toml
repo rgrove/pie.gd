@@ -3,7 +3,7 @@ primary_region = "sea"
 
 [env]
   PRIMARY_REGION = "sea"
-  ES_JAVA_OPTS = "-Xms1024m -Xmx1024m -Des.enforce.bootstrap.checks=true"
+  ES_JAVA_OPTS = "-Xms512m -Xmx512m -Des.enforce.bootstrap.checks=true"
   "cluster.name" = "es-mastodon"
   "discovery.type" = "single-node"
   "thread_pool.write.queue_size" = "1000"
