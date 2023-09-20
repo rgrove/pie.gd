@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM ghcr.io/mastodon/mastodon:v4.1.7
+FROM ghcr.io/mastodon/mastodon:v4.1.9
 ARG TARGETARCH
 USER root
 
