@@ -82,7 +82,7 @@ ENV \
   ES_HOST="sea.pie-gd-elasticsearch.internal" \
   ES_PORT="9200" \
   LOCAL_DOMAIN="pie.gd" \
-  REDIS_URL="redis://sea.pie-gd-redis.internal:6379" \
+  REDIS_URL="redis://sea.pie-gd-redis.internal:6379/?family=6" \
   S3_ALIAS_HOST="files.pie.gd" \
   S3_BUCKET="pie-gd-uploads" \
   S3_ENABLED="true" \
