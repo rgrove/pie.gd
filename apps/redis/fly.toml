@@ -10,3 +10,6 @@ app = "pie-gd-redis"
 [mounts]
   source = "mastodon_redis"
   destination = "/data"
+  auto_extend_size_threshold = 80
+  auto_extend_size_increment = "1GB"
+  auto_extend_size_limit = "10GB"

@@ -16,6 +16,9 @@ primary_region = "sea"
 [mounts]
   source = "mastodon_elasticsearch"
   destination = "/usr/share/elasticsearch/data"
+  auto_extend_size_threshold = 80
+  auto_extend_size_increment = "1GB"
+  auto_extend_size_limit = "10GB"
 
 [checks]
   [checks.es]
