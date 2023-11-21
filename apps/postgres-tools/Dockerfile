@@ -12,7 +12,7 @@ RUN set -eux; \
   apt autoremove -y
 
 # Install the Backblaze B2 CLI
-ARG B2_VERSION="3.9.0"
+ARG B2_VERSION="3.13.0"
 RUN set -eux; \
   wget -O /usr/bin/b2 "https://github.com/Backblaze/B2_Command_Line_Tool/releases/download/v${B2_VERSION}/b2-linux"; \
   chmod +x /usr/bin/b2
