@@ -100,4 +100,5 @@ ENV \
 RUN envsubst '$${LOCAL_DOMAIN}' < /app/nginx.conf.template > /app/nginx.conf && \
   rm /app/nginx.conf.template
 
-ENTRYPOINT ["/app/bin/docker-entrypoint"]
+USER mastodon
+ENTRYPOINT []

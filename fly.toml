@@ -1,6 +1,7 @@
 app = "pie-gd-mastodon-v2"
 kill_timeout = 15
 primary_region = "sea"
+swap_size_mb = 512
 
 [build]
   dockerfile = "apps/mastodon/Dockerfile"
