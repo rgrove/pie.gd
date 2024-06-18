@@ -12,7 +12,8 @@ RUN apt-get update && \
       debian-archive-keyring \
       gettext-base \
       gnupg2 \
-      lsb-release && \
+      lsb-release \
+      tmux && \
     curl https://nginx.org/keys/nginx_signing.key \
       | gpg --dearmor \
       | tee /usr/share/keyrings/nginx-archive-keyring.gpg > /dev/null && \
@@ -43,12 +44,12 @@ RUN \
   wget -O /usr/bin/supercronic "https://github.com/aptible/supercronic/releases/download/v${SUPERCRONIC_VERSION}/supercronic-linux-${TARGETARCH}" && \
   chmod +x /usr/bin/supercronic
 
-# Install Hivemind
-ARG HIVEMIND_VERSION="1.1.0"
+# Install Overmind
+ARG OVERMIND_VERSION="2.5.1"
 RUN \
-  wget -O - "https://github.com/DarthSim/hivemind/releases/download/v${HIVEMIND_VERSION}/hivemind-v${HIVEMIND_VERSION}-linux-${TARGETARCH}.gz" \
-    | gunzip --stdout > /usr/bin/hivemind && \
-  chmod +x /usr/bin/hivemind
+  wget -O - "https://github.com/DarthSim/overmind/releases/download/v${OVERMIND_VERSION}/overmind-v${OVERMIND_VERSION}-linux-${TARGETARCH}.gz" \
+    | gunzip --stdout > /usr/bin/overmind && \
+  chmod +x /usr/bin/overmind
 
 COPY --link \
   apps/mastodon/Procfile.mastodon \

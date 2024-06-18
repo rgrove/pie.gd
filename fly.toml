@@ -14,9 +14,10 @@ swap_size_mb = 512
   # release_command = "bundle exec rails db:migrate"
 
 [env]
-  #HEADER_CLIENT_IP = "cf-connecting-ip" # Trust Cloudflare's cf-connecting-ip header
   MAX_THREADS = "16"
   MIN_THREADS = "5"
+  OVERMIND_NO_PORT = "true"
+  OVERMIND_TIMEOUT = "10"
   RAILS_LOG_LEVEL = "warn"
   RAILS_LOG_TO_STDOUT = "true"
   RAILS_SERVE_STATIC_FILES = ""
@@ -28,8 +29,8 @@ swap_size_mb = 512
   path = "/metrics"
 
 [processes]
-  mastodon = "hivemind --timeout 10 Procfile.mastodon"
-  sidekiq = "hivemind --timeout 10 Procfile.sidekiq"
+  mastodon = "overmind start --procfile Procfile.mastodon"
+  sidekiq = "overmind start --auto-restart sidekiq --procfile Procfile.sidekiq"
 
 [[services]]
   internal_port = 8080 # Nginx listens on 8080 and proxies to Rails on port 3000 and Node on port 4000
@@ -48,14 +49,12 @@ swap_size_mb = 512
     path = "/health"
     grace_period = "15s"
     interval = "10s"
-    restart_limit = 8
     timeout = "2s"
 
   [[services.http_checks]]
     path = "/api/v1/streaming/health"
     grace_period = "15s"
     interval = "10s"
-    restart_limit = 8
     timeout = "2s"
 
   [[services.ports]]
