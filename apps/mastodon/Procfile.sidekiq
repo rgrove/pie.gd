@@ -1,2 +1,2 @@
-sidekiq: bundle exec sidekiq
+sidekiq: bundle exec sidekiq -c 3
 cron: supercronic --quiet /app/crontab
