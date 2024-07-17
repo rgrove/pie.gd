@@ -41,8 +41,8 @@ swap_size_mb = 4096
   min_machines_running = 1
 
   [services.concurrency]
-    hard_limit = 400
-    soft_limit = 200
+    hard_limit = 2000
+    soft_limit = 500
     type = "requests"
 
   [[services.http_checks]]
