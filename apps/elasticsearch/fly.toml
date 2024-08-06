@@ -1,5 +1,6 @@
 app = "pie-gd-elasticsearch"
 primary_region = "sea"
+swap_size_mb = 512
 
 [env]
   PRIMARY_REGION = "sea"
