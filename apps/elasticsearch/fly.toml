@@ -1,6 +1,10 @@
 app = "pie-gd-elasticsearch"
 primary_region = "sea"
-swap_size_mb = 512
+swap_size_mb = 1024
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = 768
 
 [env]
   PRIMARY_REGION = "sea"

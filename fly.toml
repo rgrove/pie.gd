@@ -24,20 +24,30 @@ swap_size_mb = 4096
   STATSD_ADDR = "localhost:9125"
   WEB_CONCURRENCY = "0"
 
-[metrics]
-  port = 9091
-  path = "/metrics"
-
 [processes]
   mastodon = "overmind start --procfile Procfile.mastodon"
   sidekiq = "overmind start --auto-restart sidekiq --procfile Procfile.sidekiq"
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = 512
+
+[[vm]]
+  processes = ["sidekiq"]
+  size = "shared-cpu-1x"
+  memory = 1024
+
+[[metrics]]
+  port = 9091
+  path = "/metrics"
+  processes = ["mastodon"]
 
 [[services]]
   internal_port = 8080 # Nginx listens on 8080 and proxies to Rails on port 3000 and Node on port 4000
   processes = ["mastodon"]
   protocol = "tcp"
   auto_start_machines = true
-  auto_stop_machines = true
+  auto_stop_machines = "suspend"
   min_machines_running = 1
 
   [services.concurrency]

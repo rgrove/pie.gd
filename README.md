@@ -22,15 +22,15 @@ I use Fly.io to run a small private Mastodon instance using the [official Mastod
 
 - `pie-gd-mastodon-v2`: This app uses the same Mastodon Docker image to run different processes in two separate machines:
 
-  - `mastodon` (shared-cpu-1x, 1GB RAM): Nginx reverse proxy, Mastodon Rails app, and Mastodon Node.js streaming server.
+  - `mastodon` (shared-cpu-1x, 512MB RAM): Nginx reverse proxy, Mastodon Rails app, and Mastodon Node.js streaming server.
 
   - `sidekiq` (shared-cpu-1x, 1GB RAM): Sidekiq job processor.
 
-- `pie-gd-postgres15` (shared-cpu-1x, 512MB RAM x 3): Postgres, created using [`fly pg create`](https://fly.io/docs/postgres/) and later scaled up. This is a multi-region cluster consisting of two machines in the primary `sea` region and one in the `sjc` region, each with a persistent disk volume attached.
+- `pie-gd-postgres15` (shared-cpu-1x, 1GB RAM x 3): Postgres cluster created using [`fly pg create`](https://fly.io/docs/postgres/) and later scaled up.
 
 - `pie-gd-redis` (shared-cpu-1x, 256MB RAM x 2): Redis. This is a primary in the `sea` region and a read-only replica in the `sjc` region, each with a persistent disk volume.
 
-- `pie-gd-elasticsearch` (shared-cpu-1x, 2GB RAM): Single-node Elasticsearch service. Optional.
+- `pie-gd-elasticsearch` (shared-cpu-1x, 768MB RAM): Single-node Elasticsearch service. Optional.
 
 Media is stored in [Backblaze B2](https://www.backblaze.com/b2/cloud-storage.html), which has an S3-compatible API that Mastodon can use (and lower storage fees than S3).
 
@@ -67,7 +67,6 @@ fly apps create --org pie-gd --name pie-gd-mastodon
 fly regions add sea
 fly ips allocate-v4 --region sea
 fly ips allocate-v6
-fly scale memory 1024
 ```
 
 After pointing DNS at the app, create a TLS certificate:
@@ -118,7 +117,7 @@ fly machines clone <machine id from list> --config apps/redis/fly.toml --region 
 Create a Postgres flex cluster. We'll create two machines in the `sea` region, scale them up from the default 256MB of RAM to 512MB, and then add a machine in the `sjc` region to get cross-region replication.
 
 ```bash
-fly pg create --org pie-gd --name pie-gd-postgres15 --initial-cluster-size 2 --region sea --flex
+fly pg create --org pie-gd --name pie-gd-postgres15 --initial-cluster-size 3 --region sea --flex
 ```
 
 List the machines to get their IDs:
@@ -127,16 +126,10 @@ List the machines to get their IDs:
 fly machines list --app pie-gd-postgres15
 ```
 
-Scale up the machines to increase their RAM (do this for both machines in the list):
+Scale up the machines to increase their RAM (do this for all machines in the list):
 
 ```bash
-fly machine update <machine id from list> --memory 512 --app pie-gd-postgres15
-```
-
-Add a replica in the `sjc` region:
-
-```bash
-fly machines clone <machine id from list> --region sjc --app pie-gd-postgres15
+fly machine update <machine id from list> --memory 1024 --app pie-gd-postgres15
 ```
 
 Attach the cluster to the `pie-gd-mastodon` app:
@@ -153,7 +146,7 @@ Optional. If you choose not to deploy Elasticsearch, be sure to comment out or r
 fly apps create --org pie-gd --name pie-gd-elasticsearch
 fly regions add sea --app pie-gd-elasticsearch
 fly volumes create mastodon_elasticsearch --app pie-gd-elasticsearch --region sea --size 1
-fly deploy --vm-size shared-cpu-1x --vm-memory 1024 apps/elasticsearch
+fly deploy apps/elasticsearch
 ```
 
 ### Upload Storage
