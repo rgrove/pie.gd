@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM redis:7.2.3-alpine
+FROM redis:7.4.0-alpine
 ARG TARGETARCH
 
 RUN apk add --no-cache gzip tar wget
@@ -12,7 +12,7 @@ RUN \
   chmod +x /usr/bin/hivemind
 
 # Install Redis Exporter
-ARG REDIS_EXPORTER_VERSION="1.55.0"
+ARG REDIS_EXPORTER_VERSION="1.62.0"
 RUN \
   wget -O - "https://github.com/oliver006/redis_exporter/releases/download/v${REDIS_EXPORTER_VERSION}/redis_exporter-v${REDIS_EXPORTER_VERSION}.linux-${TARGETARCH}.tar.gz" \
     | tar -xz -C /usr/bin --strip-components=1 "redis_exporter-v${REDIS_EXPORTER_VERSION}.linux-${TARGETARCH}/redis_exporter" && \

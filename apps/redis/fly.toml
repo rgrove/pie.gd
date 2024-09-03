@@ -1,5 +1,8 @@
 app = "pie-gd-redis"
 
+[deploy]
+  strategy = "canary"
+
 [env]
   PRIMARY_REGION = "sea"
 
