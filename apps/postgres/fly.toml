@@ -1,12 +1,15 @@
-# fly.toml file generated for pie-gd-postgres15 on 2023-03-25T17:02:47-07:00
-
 app = "pie-gd-postgres15"
 kill_signal = "SIGINT"
 kill_timeout = 5
 primary_region = "sea"
+swap_size_mb = 1024
 
 [env]
   PRIMARY_REGION = "sea"
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = 768
 
 [metrics]
   port = 9187
@@ -26,12 +29,14 @@ primary_region = "sea"
     interval = "15s"
     timeout = "10s"
     path = "/flycheck/pg"
+
   [checks.role]
     port = 5500
     type = "http"
     interval = "15s"
     timeout = "10s"
     path = "/flycheck/role"
+
   [checks.vm]
     port = 5500
     type = "http"
@@ -46,6 +51,7 @@ primary_region = "sea"
   [[services.ports]]
     port = 5432
     handlers = ["pg_tls"]
+
   [services.concurrency]
     type = "connections"
     hard_limit = 1000
@@ -58,6 +64,7 @@ primary_region = "sea"
   [[services.ports]]
     port = 5433
     handlers = ["pg_tls"]
+
   [services.concurrency]
     type = "connections"
     hard_limit = 1000
