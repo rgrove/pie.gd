@@ -26,7 +26,7 @@ I use Fly.io to run a small private Mastodon instance using the [official Mastod
 
   - `sidekiq` (shared-cpu-1x, 1GB RAM): Sidekiq job processor.
 
-- `pie-gd-postgres15` (shared-cpu-1x, 1GB RAM x 3): Postgres cluster created using [`fly pg create`](https://fly.io/docs/postgres/) and later scaled up.
+- `pie-gd-postgres15` (shared-cpu-1x, 512GB RAM x 3): Postgres cluster created using [`fly pg create`](https://fly.io/docs/postgres/) and later scaled up.
 
 - `pie-gd-redis` (shared-cpu-1x, 256MB RAM x 2): Redis. This is a primary in the `sea` region and a read-only replica in the `sjc` region, each with a persistent disk volume.
 
@@ -129,7 +129,7 @@ fly machines list --app pie-gd-postgres15
 Scale up the machines to increase their RAM (do this for all machines in the list):
 
 ```bash
-fly machine update <machine id from list> --memory 1024 --app pie-gd-postgres15
+fly machine update <machine id from list> --memory 512 --app pie-gd-postgres15
 ```
 
 Attach the cluster to the `pie-gd-mastodon` app:

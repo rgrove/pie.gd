@@ -9,7 +9,7 @@ swap_size_mb = 1024
 
 [[vm]]
   size = "shared-cpu-1x"
-  memory = 768
+  memory = 512
 
 [metrics]
   port = 9187
@@ -18,7 +18,7 @@ swap_size_mb = 1024
 [mounts]
   source = "pg_data"
   destination = "/data"
-  auto_extend_size_threshold = 50
+  auto_extend_size_threshold = 60
   auto_extend_size_increment = "1GB"
   auto_extend_size_limit = "50GB"
 
