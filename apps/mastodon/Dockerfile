@@ -31,13 +31,6 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log && \
   chown -R mastodon:0 /var/cache/nginx && \
   chmod -R g+w /var/cache/nginx
 
-# Install statsd_exporter
-ARG STATSD_EXPORTER_VERSION="0.24.0"
-RUN \
-  wget -O - "https://github.com/prometheus/statsd_exporter/releases/download/v${STATSD_EXPORTER_VERSION}/statsd_exporter-${STATSD_EXPORTER_VERSION}.linux-${TARGETARCH}.tar.gz" \
-    | tar -xz -C /usr/bin --strip-components=1 "statsd_exporter-${STATSD_EXPORTER_VERSION}.linux-${TARGETARCH}/statsd_exporter" && \
-  chmod +x /usr/bin/statsd_exporter
-
 # Install Supercronic
 ARG SUPERCRONIC_VERSION="0.2.25"
 RUN \
@@ -58,7 +51,6 @@ COPY --link \
 
 COPY --link \
   apps/mastodon/crontab \
-  apps/mastodon/statsd-mapping.yaml \
   /app/
 
 COPY --link \
