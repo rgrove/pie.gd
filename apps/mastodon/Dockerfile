@@ -32,7 +32,7 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log && \
   chmod -R g+w /var/cache/nginx
 
 # Install Supercronic
-ARG SUPERCRONIC_VERSION="0.2.25"
+ARG SUPERCRONIC_VERSION="0.2.32"
 RUN \
   wget -O /usr/bin/supercronic "https://github.com/aptible/supercronic/releases/download/v${SUPERCRONIC_VERSION}/supercronic-linux-${TARGETARCH}" && \
   chmod +x /usr/bin/supercronic
