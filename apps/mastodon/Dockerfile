@@ -1,5 +1,7 @@
 # syntax=docker/dockerfile:1
-FROM ghcr.io/mastodon/mastodon:v4.2.13
+FROM ghcr.io/mastodon/mastodon-streaming:v4.3.0 AS streaming
+FROM ghcr.io/mastodon/mastodon:v4.3.0 AS mastodon
+
 ARG TARGETARCH
 USER root
 
@@ -44,6 +46,12 @@ RUN \
     | gunzip --stdout > /usr/bin/overmind && \
   chmod +x /usr/bin/overmind
 
+# Copy Node.js and streaming server npm dependencies from the streaming image.
+COPY --from=streaming /usr/local/bin /usr/local/bin
+COPY --from=streaming /usr/local/lib /usr/local/lib
+COPY --from=streaming /opt/mastodon/node_modules /opt/mastodon/node_modules
+
+# Copy local config files and scripts.
 COPY --link \
   apps/mastodon/Procfile.mastodon \
   apps/mastodon/Procfile.sidekiq \
@@ -94,4 +102,6 @@ RUN envsubst '$${LOCAL_DOMAIN}' < /app/nginx.conf.template > /app/nginx.conf && 
   rm /app/nginx.conf.template
 
 USER mastodon
+EXPOSE 3000
+EXPOSE 4000
 ENTRYPOINT []

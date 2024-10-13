@@ -11,6 +11,10 @@ swap_size_mb = 4096
 
   # When it's necessary to run DB migrations before a deployment, uncomment the
   # following line.
+  #
+  # Note that environment variables can't be set in this command, but if you
+  # need to set the `SKIP_POST_DEPLOYMENT_MIGRATIONS` env var you can
+  # temporarily add it to the `env` section below.
   # release_command = "bundle exec rails db:migrate"
 
 [env]

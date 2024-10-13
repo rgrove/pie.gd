@@ -1,3 +1,3 @@
 rails: bundle exec rails server -p 3000
-streaming: PORT=4000 node ./streaming
+streaming: PORT=4000 node ./streaming/index.js
 nginx: nginx -c /app/nginx.conf
