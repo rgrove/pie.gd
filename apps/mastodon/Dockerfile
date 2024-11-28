@@ -92,6 +92,7 @@ ENV \
   S3_OPEN_TIMEOUT="20" \
   S3_PROTOCOL="https" \
   S3_READ_TIMEOUT="20" \
+  S3_RETRY_LIMIT="3" \
   SMTP_AUTHENTICATION="cram_md5" \
   SMTP_FROM_ADDRESS="Mastodon <notifications@pie.gd>" \
   SMTP_PORT="25" \
