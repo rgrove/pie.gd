@@ -9,7 +9,7 @@ swap_size_mb = 1024
 
 [[vm]]
   size = "shared-cpu-1x"
-  memory = 512
+  memory = 1024
 
 [metrics]
   port = 9187
