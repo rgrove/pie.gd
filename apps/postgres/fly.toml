@@ -8,7 +8,7 @@ swap_size_mb = 1024
   PRIMARY_REGION = "sea"
 
 [[vm]]
-  size = "shared-cpu-1x"
+  size = "shared-cpu-2x"
   memory = 1024
 
 [metrics]

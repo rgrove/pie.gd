@@ -38,7 +38,6 @@ First, connect Postgres on the primary node using psql:
 fly pg connect
 ```
 
-
 Next, open the Mastodon database and check its read-only status:
 
 ```sql
