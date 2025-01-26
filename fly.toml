@@ -18,8 +18,8 @@ swap_size_mb = 4096
   # release_command = "bundle exec rails db:migrate"
 
 [env]
-  MAX_THREADS = "16"
-  MIN_THREADS = "5"
+  MAX_THREADS = "8"
+  MIN_THREADS = "2"
   OVERMIND_NO_PORT = "true"
   OVERMIND_SOCKET = "/tmp/overmind.sock"
   OVERMIND_TIMEOUT = "10"
