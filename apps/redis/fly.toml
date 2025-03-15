@@ -1,7 +1,8 @@
 app = "pie-gd-redis"
+swap_size_mb = 512
 
 [deploy]
-  strategy = "canary"
+  strategy = "rolling"
 
 [env]
   PRIMARY_REGION = "sea"
