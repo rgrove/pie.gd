@@ -40,7 +40,7 @@ echo "=> Closing proxy"
 kill %1
 
 echo "=> Uploading $B2_FILENAME to B2 bucket $B2_BUCKET"
-b2 upload-file "$B2_BUCKET" "$TMPFILE" "$B2_FILENAME" \
+b2 file upload "$B2_BUCKET" "$TMPFILE" "$B2_FILENAME" \
   || (rm -f "$TMPFILE" && exit 1)
 
 rm -f "$TMPFILE"
