@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
-FROM ghcr.io/mastodon/mastodon-streaming:v4.3.9 AS streaming
-FROM ghcr.io/mastodon/mastodon:v4.3.9 AS mastodon
+FROM ghcr.io/mastodon/mastodon-streaming:v4.4.1 AS streaming
+FROM ghcr.io/mastodon/mastodon:v4.4.1 AS mastodon
 
 ARG TARGETARCH
 USER root
