@@ -1,5 +1,10 @@
 # pie.gd Mastodon Instance
 
+> [!IMPORTANT]
+> As of July 19 2025, the [pie.gd](https://pie.gd) Mastodon instance is no longer hosted on Fly.io and this repository is no longer actively maintained. I've left it here as a snapshot of potentially useful information, but it's likely to be outdated.
+>
+> While I still like Fly.io, their recent platform changes have gradually made it too expensive and too time consuming to reliably host a small Mastodon instance there. I've moved pie.gd to [DigitalOcean](https://m.do.co/c/fb65149fa2b8), where I'm able to run it less expensively while also taking advantage of their managed PostgreSQL service to ease my maintenance burden (Fly.io also recently launched managed PostgreSQL, but at twice the starting price).
+
 [pie.gd](https://pie.gd) is my private Mastodon instance hosted on [Fly.io](https://fly.io).
 
 This repository contains the various config files, scripts, and documentation that I use to run pie.gd. I'm sharing it because other people running Mastodon instances might find it helpful, but this isn't intended to be a general purpose plug-and-play Mastodon setup; it's very specific to my instance.
